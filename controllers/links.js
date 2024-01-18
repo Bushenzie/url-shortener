@@ -3,7 +3,7 @@ const validator = require("validator");
 const crypto = require("crypto");
 const {StatusCodes} = require("http-status-codes")
 
-const LINK_ENCODING = "utf8";
+const LINK_ENCODING = "hex";
 
 async function createLink(req,res) {
     const { url } = req.body;
