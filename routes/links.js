@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { createLink, getLink } = require("../controllers/links") 
+const { createLink, getLink,deleteLink } = require("../controllers/links") 
 
-router.get("/:id",getLink);
 router.post("/",createLink);
+router.get("/:id",getLink);
+router.delete("/:id",deleteLink);
 
 module.exports = router;

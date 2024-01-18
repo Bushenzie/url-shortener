@@ -1,16 +1,26 @@
 require("dotenv").config();
+require("express-async-errors");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 5000
 const mongoose = require("mongoose");
+const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
 
+app.use(express.urlencoded({extended:true}))
+app.use(express.json());
+app.use(morgan("tiny"))
 app.use(helmet());
 app.use(cors());
 
 const linkRouter = require("./routes/links");
 app.use("/links",linkRouter)
+
+const errorHandler = require("./middleware/errorHandler");
+const notFoundHandler = require("./middleware/notFound");
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 start();
 
