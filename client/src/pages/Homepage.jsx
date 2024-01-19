@@ -16,6 +16,7 @@ function Homepage() {
             })
             let data = response.data;
             if(data.id) {
+                setInputValue("");
                 setMessage("Successfully generated link...")
                 setReturnValue(data.id);
             }
@@ -31,7 +32,13 @@ function Homepage() {
             <button onClick={handleSubmit}>Generate Link</button>
             <p>{message}</p>
             {returnValue &&
-                <button onClick={() => {navigate(`/${returnValue}`)}}>Go to link!</button>
+            <>
+                <div>Link: <a href={`http://localhost:3000/${returnValue}`}>{`localhost:3000/${returnValue}`}</a></div>
+                <div>
+                    <button onClick={() => {navigate(`/${returnValue}`)}}>Go to link!</button>
+                    <button onClick={() => {navigator.clipboard.writeText(`http://localhost:3000/${returnValue}`)}}>Copy</button>
+                </div>
+            </>
             }
         </div>
     )
