@@ -12,7 +12,7 @@ async function createLink(req,res) {
     const searchedLink = await Link.findOne({url});
     if(searchedLink) throw new Error("Link already exists.");
 
-    const randomBytes = await crypto.randomBytes(12).toString(LINK_ENCODING);
+    const randomBytes = await crypto.randomBytes(8).toString(LINK_ENCODING);
     const createdLink = await Link.create({url ,shortenedID: randomBytes});
 
     res.status(StatusCodes.CREATED).json({
@@ -34,6 +34,17 @@ async function getLink(req,res) {
     })
 }
 
+async function getAllLinks(req,res) {
+    const searchedLinks = await Link.find({});
+    if(searchedLinks.length === 0) throw new Error("No links found");
+
+    res.status(StatusCodes.OK).json({
+        message: "OK",
+        count: searchedLinks.length,
+        links: searchedLinks
+    })
+}
+
 async function deleteLink(req,res) {
     const { id:linkId } = req.params;
 
@@ -50,5 +61,6 @@ async function deleteLink(req,res) {
 module.exports = {
     createLink,
     getLink,
+    getAllLinks,
     deleteLink
 }
