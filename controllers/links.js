@@ -10,7 +10,10 @@ async function createLink(req,res) {
     if(!validator.isURL(url)) throw new Error("Wrong url provided");
     
     const searchedLink = await Link.findOne({url});
-    if(searchedLink) throw new Error("Link already exists.");
+    if(searchedLink) return res.status(StatusCodes.OK).json({
+        message: "Link already exists",
+        id: searchedLink.shortenedID
+    });
 
     const randomBytes = await crypto.randomBytes(8).toString(LINK_ENCODING);
     const createdLink = await Link.create({url ,shortenedID: randomBytes});
