@@ -12,7 +12,9 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json());
 app.use(morgan("tiny"))
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+}));
 
 const linkRouter = require("./routes/links");
 app.use("/links",linkRouter)
